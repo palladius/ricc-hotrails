@@ -89,9 +89,15 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
+production-todo:
   <<: *default
   # database: quote_editor_production
   # username: quote_editor
   # password: <%= ENV["QUOTE_EDITOR_DATABASE_PASSWORD"] %>
   database: <%= ENV['DATABASE_URL'] %>
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000
