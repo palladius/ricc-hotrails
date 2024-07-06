@@ -48,6 +48,7 @@ class QuotesTest < ApplicationSystemTestCase
     assert_text "Updated quote"
   end
 
+  # fails dont know whty. Should work..
   test "Destroying a quote" do
     visit quotes_path
     assert_text @quote.name
