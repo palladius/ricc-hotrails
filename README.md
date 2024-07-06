@@ -11,6 +11,7 @@ Riccardo wants to learn Turbo and Stimulus.
 
 * https://docs.google.com/document/d/1XQSbAjj8zirUnXWMDdDecGl3lyNIcwTC_wdBv4CUB7A/edit
 
+
 ## BUGS
 
 Ah no its good.

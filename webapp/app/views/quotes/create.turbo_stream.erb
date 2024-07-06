@@ -1,0 +1,10 @@
+<% # app/views/quotes/create.turbo_stream.erb %>
+
+<%= turbo_stream.prepend "quotes" do %>
+  <% # EQUIVALENT TO render partial: "quotes/quote", locals: { quote: @quote } %>
+  <%= render @quote %>
+<% end %>
+<%# or even better: = turbo_stream.prepend "quotes", @quote %>
+
+
+<%= turbo_stream.update Quote.new, "" %>
