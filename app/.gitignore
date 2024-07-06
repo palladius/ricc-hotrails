@@ -38,3 +38,10 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+
+# Added by Riccardo START
+.yarn/
+.pnp.loader.mjs
+db/*.sqlite3
+# Added by Riccardo END
