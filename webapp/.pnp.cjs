@@ -28,6 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@hotwired/turbo-rails", "npm:8.0.4"],\
             ["esbuild", "npm:0.23.0"],\
             ["sass", "npm:1.77.6"]\
           ],\
@@ -250,6 +251,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@hotwired/turbo", [\
+        ["npm:8.0.4", {\
+          "packageLocation": "./.yarn/cache/@hotwired-turbo-npm-8.0.4-2390e067c8-87c592f05e.zip/node_modules/@hotwired/turbo/",\
+          "packageDependencies": [\
+            ["@hotwired/turbo", "npm:8.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@hotwired/turbo-rails", [\
+        ["npm:8.0.4", {\
+          "packageLocation": "./.yarn/cache/@hotwired-turbo-rails-npm-8.0.4-bf200117fe-0f1a0cfb92.zip/node_modules/@hotwired/turbo-rails/",\
+          "packageDependencies": [\
+            ["@hotwired/turbo-rails", "npm:8.0.4"],\
+            ["@hotwired/turbo", "npm:8.0.4"],\
+            ["@rails/actioncable", "npm:7.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@isaacs/cliui", [\
         ["npm:8.0.2", {\
           "packageLocation": "./.yarn/cache/@isaacs-cliui-npm-8.0.2-f4364666d5-4a473b9b32.zip/node_modules/@isaacs/cliui/",\
@@ -303,6 +324,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@pkgjs-parseargs-npm-0.11.0-cd2a3fe948-6ad6a00fc4.zip/node_modules/@pkgjs/parseargs/",\
           "packageDependencies": [\
             ["@pkgjs/parseargs", "npm:0.11.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@rails/actioncable", [\
+        ["npm:7.1.3", {\
+          "packageLocation": "./.yarn/cache/@rails-actioncable-npm-7.1.3-da6d8379e9-848911da88.zip/node_modules/@rails/actioncable/",\
+          "packageDependencies": [\
+            ["@rails/actioncable", "npm:7.1.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -386,6 +416,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["app", "workspace:."],\
+            ["@hotwired/turbo-rails", "npm:8.0.4"],\
             ["esbuild", "npm:0.23.0"],\
             ["sass", "npm:1.77.6"]\
           ],\

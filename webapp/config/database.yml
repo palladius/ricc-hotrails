@@ -27,7 +27,7 @@ development: # sqlite3
 
 development-todo: # postgres TODO
   <<: *default
-  database: <%= ENV['DATABASE_URL'] %>
+  database: "<%= ENV['DATABASE_URL'] %>"
   #database: quote_editor_development
   # DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
 
