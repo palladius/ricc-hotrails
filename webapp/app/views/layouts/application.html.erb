@@ -12,5 +12,9 @@
 
   <body>
     <%= yield %>
+    <footer class="footer footer2" style='font-style:bold;align:center' >
+    <%= APP_NAME %>
+      v<%= APP_VERSION %> - ENV=<%= Rails.env %>
+    </footer>
   </body>
 </html>
