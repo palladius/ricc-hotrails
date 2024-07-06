@@ -22,19 +22,35 @@ FROM base as build
 
 # Install packages needed to build gems and node modules
 RUN apt-get update -qq && \
-    apt-get remove -y cmdtest yarn && \
     apt-get install --no-install-recommends -y build-essential curl git libpq-dev libvips node-gyp pkg-config python-is-python3
 
 # Install JavaScript dependencies
-#ARG NODE_VERSION=18.19.1
-ARG NODE_VERSION=22.4.0
-ARG YARN_VERSION=3.6.1
+ARG NODE_VERSION=18.19.1
+#ARG NODE_VERSION=22.4.0
+#ARG YARN_VERSION=3.6.1
+ARG YARN_VERSION=2.4.3
+#ARG YARN_VERSION=4.3.1
+
+# DEREK
+# ricc@derek:🏡~/git/ricc-hotrails/webapp$ yarn --version
+# 3.6.1
+# ricc@derek:🏡~/git/ricc-hotrails/webapp$ node --version
+# v18.19.1
+
 ENV PATH=/usr/local/node/bin:$PATH
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node # &&
-
-RUN npm install -g yarn@$YARN_VERSION && \
+    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+    npm view yarn versions && \
+    which npm && \
+    npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
+
+# Riccardo start
+#    apt-get remove -y cmdtest yarn && \
+#RUN which yarn
+#RUN ls -al ~/.npm-packages/bin/
+# Riccardo end
+
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
