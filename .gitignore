@@ -1,2 +1,5 @@
 .envrc
 .echodo_history
+
+development.sqlite3-*
+test.sqlite3-*
