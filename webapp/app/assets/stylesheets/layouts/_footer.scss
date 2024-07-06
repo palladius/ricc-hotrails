@@ -8,7 +8,13 @@
     margin-top: var(--space-m);
     margin-bottom: var(--space-l);
 
+    color: yellowgreen;
+
     @include media(tabletAndUp) {
       margin-bottom: var(--space-xl);
     }
+  }
+
+  p {  /* Targets all paragraph elements */
+    color: red;
   }

@@ -8,6 +8,7 @@ gem 'foreman' # bug
 gem 'sqlite3', '~>1.7'
 #gem "simple_form", "~> 5.1.0"
 gem "simple_form" # , "~> 5.1.0"
+gem "turbo-rails", "~> 1.0"
 # Riccardo END
 
 
@@ -27,7 +28,8 @@ gem "puma", ">= 5.0"
 gem "jsbundling-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
+#gem "turbo-rails"
+
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
