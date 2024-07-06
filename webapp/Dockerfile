@@ -28,12 +28,9 @@ ARG YARN_VERSION=3.6.1
 ENV PATH=/usr/local/node/bin:$PATH
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node # && \
-#    npm cache clean --force &&
 
-RUN npm install -g yarn@$YARN_VERSION # && \
-
-
-RUN rm -rf /tmp/node-build-master
+RUN npm install -g yarn@$YARN_VERSION && \
+    rm -rf /tmp/node-build-master
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
