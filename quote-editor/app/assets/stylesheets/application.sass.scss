@@ -6,12 +6,14 @@
 @import "mixins/media";
 
 // Configuration
+@import "config/animations";
 @import "config/reset";
 @import "config/variables";
 
 // Components
 @import "components/btn";
 @import "components/error_message";
+@import "components/flash";
 @import "components/footer2"; // created by ricc
 @import "components/form";
 @import "components/navbar";

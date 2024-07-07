@@ -1,4 +1,5 @@
 
+2024-07-07 v1.1  CH7 - Making flash msg work!
 2024-07-07 v1.0  CH6 - Adding company and User. 2 more tables!
    .. breaking DB change ..
 2024-07-07 v0.10 CH5 - Real-time updates with Turbo Streams - done
