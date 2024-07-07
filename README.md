@@ -24,3 +24,22 @@ Your platform is: x86_64-linux
 ricc@derek:🏡~/git/ricc-hotrails/webapp$ arch
 x86_64
 ```
+
+### Dockerfile fails:
+
+Error:
+
+```
+The command '/bin/sh -c yarn install --frozen-lockfile' returned a non-zero code: 1
+➤ YN0050: The --frozen-lockfile option is deprecated; use --immutable and/or --immutable-cache instead
+ ---> Running in bc5a610a811e
+Step 14/26 : RUN yarn install --frozen-lockfile
+```
+
+Tried this solution:
+
+```
+# Solution from https://stackoverflow.com/questions/43429685/how-can-i-resolve-your-bundle-only-supports-platforms-x86-mingw32-but-your
+$ bundle lock --add-platform ruby
+$ bundle lock --add-platform x86_64-linux
+```
