@@ -8,8 +8,7 @@ FROM ruby:$RUBY_VERSION-alpine as base
 WORKDIR /rails
 
 # Set production environment
-ENV BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
+ENV BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development:test" \
     RAILS_ENV="production"
 
@@ -49,7 +48,7 @@ RUN bundle install && \
 # Install node modules
 COPY --link .yarnrc package.json yarn.lock ./
 COPY --link .yarn/releases/* .yarn/releases/
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 # Copy application code
 COPY --link . .
@@ -74,10 +73,12 @@ COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN addgroup --system --gid 1000 rails && \
-    adduser --system rails --uid 1000 --ingroup rails --home /home/rails --shell /bin/sh rails && \
-    chown -R 1000:1000 db log storage tmp
-USER 1000:1000
+ARG UID=1000 \
+    GID=1000
+RUN addgroup --system --gid $GID rails && \
+    adduser --system rails --uid $UID --ingroup rails --home /home/rails --shell /bin/sh rails && \
+    chown -R rails:rails db log storage tmp
+USER rails:rails
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
