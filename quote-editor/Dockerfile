@@ -38,6 +38,11 @@ RUN bundle install && \
 
 # Install node modules
 COPY package.json yarn.lock ./
+# Riccardo start
+RUN pwd
+RUN which yarn
+RUN yarn
+# Riccardo end
 RUN yarn install --frozen-lockfile
 
 # Copy application code
