@@ -1,4 +1,6 @@
 
+2024-07-07 v1.2.0 [DB][breaking] Add LineItemDate.
+   Moving form 2 to 3 digits sorry
 2024-07-07 v1.3  [ops] CH8 - empty state done
 2024-07-07 v1.2  [ops] Adding https://github.com/fly-apps/dockerfile-rails
 2024-07-07 v1.1  CH7 - Making flash msg work!

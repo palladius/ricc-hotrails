@@ -1,7 +1,9 @@
 class Quote < ApplicationRecord
   belongs_to :company
+  has_many :line_item_dates, dependent: :destroy
 
   validates :name, presence: true, :uniqueness => true
+  # TODO  uniqueness: { scope: :company_id }
 
   scope :ordered, -> { order(id: :desc) }
 
