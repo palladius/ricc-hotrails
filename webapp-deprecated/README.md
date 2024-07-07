@@ -20,13 +20,6 @@ Things you may want to cover:
 * Deployment instructions
 * ...
 
-## Run locally
 
-```
-$ cd webapp/
-$ bin/setup # on a new machine
-$ bundle install
-$ bin/dev  # local dev
-```
 
 #

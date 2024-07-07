@@ -5,13 +5,13 @@ Self (public): [palladius/ricc-hotrails](https://github.com/palladius/ricc-hotra
 Riccardo wants to learn Turbo and Stimulus.
 
 ## about
-* See `webapp/README.md` for more
+
+* See `quote-editor/README.md` for more.
 
 ## Ricc doc
 
 * https://docs.google.com/document/d/1XQSbAjj8zirUnXWMDdDecGl3lyNIcwTC_wdBv4CUB7A/edit
-* initialization: rails new quote-editor --css=sass --javascript=esbuild --database=postgresql
-
+* initialization: `rails new quote-editor --css=sass --javascript=esbuild --database=postgresql`
 
 ## BUGS
 

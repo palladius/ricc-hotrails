@@ -27,7 +27,7 @@ substitutions:
   _GCLOUD_REGION: europe-west1
   _PROJECT_ID: palladius-genai
   _APP_NAME: ricc-hotrails-v2
-  #_SKAFFOLD_DEFAULT_REPO: 'europe-west1-docker.pkg.dev/palladius-genai/ricc-hotrails-v2'
+  _SKAFFOLD_DEFAULT_REPO: 'europe-west1-docker.pkg.dev/palladius-genai/ricc-hotrails-v2'
   _MESSAGGIO_OCCASIONALE: >-
     Ho provato a mettere le E2 per buildare piu veloce vediamo se va.
     Voglio anche provare a mettere dipendenze tra 4,6 e 5,7
@@ -36,18 +36,6 @@ substitutions:
 images:
 - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails-v2/ricc-hotrails-v2:latest"
 - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails-v2/ricc-hotrails-v2:sha-$SHORT_SHA"
-
-################################################################################
-# TODO(ricc): enable availableSecrets as below once Cloud build is able to push again
-#             (small iterations).
-################################################################################
-# availableSecrets:
-#   secretManager:
-#   #- versionName: projects/${PROJECT_ID}/secrets/myapp_REGION/versions/latest
-#   - versionName: projects/myapp-staging-379211/secrets/myapp_REGION/versions/latest
-#     env: myapp_REGION
-################################################################################
-
 
 #############################################################
 # MAIN phase: all Build steps
@@ -98,8 +86,7 @@ steps:
   - 'PROJECT_ID=$PROJECT_ID'
   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
   - 'DATABASE_URL_DEV=$_DATABASE_URL_DEV'
-  - 'NEWSAPI_COM_KEY=$_NEWSAPI_COM_KEY'
-  - 'GEMINI_KEY=$_GEMINI_KEY'
+#  - 'GEMINI_KEY=$_GEMINI_KEY'
 
 # Questo finalmente funge!
 - name: 'gcr.io/cloud-builders/gcloud'
@@ -115,35 +102,5 @@ steps:
   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
   - 'DATABASE_URL_PROD=$_DATABASE_URL_PROD'
   - 'OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES'
-#  - 'NEWSAPI_COM_KEY=$_NEWSAPI_COM_KEY' # DEV
-  - 'NEWSAPI_COM_KEY=$_NEWSAPI_COM_KEY_RICC' # PROD
   - 'RAILS_ENV=production'
-  - 'GEMINI_KEY=$_GEMINI_KEY'
-
-# This does NOT work
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   id: 6. Push DEV-OLD to Cloud run from POOR Env with DB stuff..
-#   entrypoint: bash
-#   args: [ "bin/cb-push-to-cloudrun-dev.sh" , "latest" ]
-#   dir: quote-editor
-#   allowFailure: true
-#   env:
-#   - 'PROJECT_ID=$PROJECT_ID'
-#   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
-#   - 'DATABASE_URL_DEV=$_DATABASE_URL_DEV'
-#   - 'DATABASE_URL_PROD=$_DATABASE_URL_PROD'
-
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   id: 7. Push PROD-OLD to Cloud run from POOR Env with DB stuff..
-#   entrypoint: bash
-#   args:
-#   - bin/cb-push-to-cloudrun-prod.sh
-#   allowFailure: true
-#   dir: quote-editor
-#   env:
-#   - 'PROJECT_ID=$PROJECT_ID'
-#   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
-#   - 'DATABASE_URL_DEV=$_DATABASE_URL_DEV'
-#   - 'DATABASE_URL_PROD=$_DATABASE_URL_PROD'
-#   - 'OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES'
-
+#  - 'GEMINI_KEY=$_GEMINI_KEY'
