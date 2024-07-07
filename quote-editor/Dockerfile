@@ -2,7 +2,7 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.1.2
-FROM ruby:$RUBY_VERSION-slim as base
+FROM ruby:$RUBY_VERSION-alpine as base
 
 # Rails app lives here
 WORKDIR /rails
@@ -17,22 +17,28 @@ ENV BUNDLE_DEPLOYMENT="1" \
 RUN gem update --system --no-document && \
     gem install -N bundler
 
+# Install packages
+RUN apk update && \
+    apk add tzdata && \
+    rm -rf /var/cache/apk/*
+
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages needed to build gems and node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential curl libpq-dev node-gyp pkg-config python-is-python3
+RUN apk update && \
+    apk add build-base curl gyp libpq-dev pkgconfig python3
 
 # Install JavaScript dependencies
 ARG NODE_VERSION=22.1.0
 ARG YARN_VERSION=1.22.22
 ENV PATH=/usr/local/node/bin:$PATH
-RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64-musl.tar.gz | tar xz -C /tmp/ && \
+    mkdir /usr/local/node && \
+    cp -rp /tmp/node-v${NODE_VERSION}-linux-x64-musl/* /usr/local/node/ && \
     npm install -g yarn@$YARN_VERSION && \
-    rm -rf /tmp/node-build-master
+    rm -rf /tmp/node-v${NODE_VERSION}-linux-x64-musl
 
 # Install application gems
 COPY --link Gemfile Gemfile.lock ./
@@ -59,17 +65,17 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN apk update && \
+    apk add curl libpq postgresql-client sqlite-dev sqlite-libs && \
+    rm -rf /var/cache/apk/*
 
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
+RUN addgroup --system --gid 1000 rails && \
+    adduser --system rails --uid 1000 --ingroup rails --home /home/rails --shell /bin/sh rails && \
     chown -R 1000:1000 db log storage tmp
 USER 1000:1000
 

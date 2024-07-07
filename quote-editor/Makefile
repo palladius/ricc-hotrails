@@ -12,3 +12,7 @@ test:
 
 fix-prod:
 	bundle lock --add-platform x86_64-linux
+
+Dockerfile:
+#rails g dockerfile --optimistic
+	rails g dockerfile --optimistic --alpine --force
