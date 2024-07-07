@@ -1,3 +1,6 @@
+# test with:
+# rails c> Quote.create!(name: "Broadcasted quote")
+
 development:
   adapter: redis
   url: redis://localhost:6379/1

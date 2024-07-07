@@ -1,5 +1,8 @@
 <% # app/views/quotes/index.html.erb %>
 
+<!-- Subscribe to quotes via Turbo Streams (WEBSocket) -->
+<%= turbo_stream_from "quotes" %>
+
 <div class="container">
   <div class="header">
     <h1>Quotes</h1>
