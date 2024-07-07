@@ -1,6 +1,7 @@
 ## CHANGELOG
 
 ```
+2024-07-07 v1.3.0 [CH10] Adding LineItems
 2024-07-07 v1.2.1 [CH9] Finished the https://www.hotrails.dev/turbo-rails/turbo-rails-crud there's a BUG now. doesnt edit dates.
 2024-07-07 v1.2.0 [DB][breaking] Add LineItemDate.
    Moving form 2 to 3 digits sorry
