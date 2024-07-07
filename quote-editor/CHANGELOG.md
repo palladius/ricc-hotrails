@@ -1,6 +1,8 @@
 ## CHANGELOG
 
 ```
+2024-07-07 v1.3.4 finished the tutorial
+2024-07-07 v1.3.3 Starting CH11 = TOTALs!
 2024-07-07 v1.3.2 Fixed the mistakes, it all works now!
 2024-07-07 v1.3.1 Adding LI controller and views  app/views/line_items/new.html.erb ...
 2024-07-07 v1.3.0 [CH10] Adding LineItems

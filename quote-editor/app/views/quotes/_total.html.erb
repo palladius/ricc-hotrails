@@ -1,0 +1,19 @@
+<% # app/views/quotes/_total.html.erb
+%>
+
+<!-- this first is invisible dunno why -->
+<footer class="quote-total">
+  <div class="quote-total__inner container">
+    <div>Total:</div>
+    <div><%= number_to_currency quote.total_price %></div>
+  </div>
+</footer>
+
+
+<!-- added by Riccardo - different CSS and it works -->
+<footer class="sobenme">
+  <div class="sobenme__inner container">
+    <div>Total:</div>
+    <div><%= number_to_currency quote.total_price %></div>
+  </div>
+</footer>
