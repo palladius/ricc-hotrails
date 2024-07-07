@@ -5,3 +5,5 @@ development.sqlite3-*
 test.sqlite3-*
 .git-privatize
 .ondir.was.here.touch
+hotwire-example-template/
+.echodo_history
