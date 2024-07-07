@@ -1,6 +1,7 @@
 ## CHANGELOG
 
 ```
+2024-07-07 v1.3.7 [ops] Adding allowlisted hosts
 2024-07-07 v1.3.6 [ops] Moved port to 8080
 2024-07-07 v1.3.5 [ops] Adding MESSAGGIO_OCCASIONALE and adding a Secret with it.
 2024-07-07 v1.3.4 finished the tutorial
