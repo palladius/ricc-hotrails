@@ -8,6 +8,8 @@
 # * _PROJECT_ID (needed)
 # * _REGION         (redundant)
 # * _MESSAGGIO_OCCASIONALE (for fun)
+#
+# Created at manhouse: europe-west1-docker.pkg.dev/palladius-genai/gemini-news-crawler
 
 set -euo pipefail
 

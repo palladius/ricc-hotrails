@@ -1,4 +1,5 @@
 
+2024-07-07 v0.9 fixed the ops part too.
 2024-07-07 v0.8 Moved to another brand new folder. Now Turbo started working
 
  ... porting to new folder ..
