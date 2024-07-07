@@ -7,3 +7,4 @@ test.sqlite3-*
 .ondir.was.here.touch
 hotwire-example-template/
 .echodo_history
+.tmp.gcloud-envrc
