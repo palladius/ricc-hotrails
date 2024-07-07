@@ -440,11 +440,6 @@ p .footer2 {
     padding-bottom: var(--space-m);
   }
 }
-.quote-total__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .turbo-progress-bar {
   background: linear-gradient(to right, var(--color-primary), var(--color-primary-rotate));
