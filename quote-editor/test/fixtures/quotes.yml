@@ -1,8 +1,15 @@
 first:
-  name: First quote
+  company: kpmg
+  name: First quote (KPMG)
 
 second:
-  name: Second quote
+  company: kpmg
+  name: Second quote (KPMG)
 
 third:
-  name: Third quote
+  company: kpmg
+  name: Third quote (KPMG)
+
+pwc-quote:
+  company: pwc
+  name: Another quote from PwC

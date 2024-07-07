@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+kpmg:
+  name: Fake KPMG 🔑💰🕵️
+
+pwc:
+  name: Fake PwC 🧩🪪🏁
+
+
+# KPMG (K*PMG): ️‍♂️ (Key Money Spy) - This emoji combination plays on the initials of KPMG and suggests a secretive company dealing with a lot of money.
+# PWC (Puzzled Wallet Checker): (Thinking Wallet Sad) - This emoji combination suggests that PWC might leave you confused about where all your money went.

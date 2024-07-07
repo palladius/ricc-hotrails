@@ -3,12 +3,10 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 # Riccardo START
-#gem "turbo-rails", "~> 1.0"
-#gem 'foreman' # bug
 gem 'sqlite3', '~>1.7'
-#gem "simple_form", "~> 5.1.0"
 gem "simple_form" # , "~> 5.1.0"
-#gem "turbo-rails", "~> 1.0"
+# chapter 6
+gem "devise", "~> 4.8.1"
 # Riccardo END
 
 
