@@ -148,8 +148,6 @@ gcloud --project "$CLOUDRUN_PROJECT_ID" \
       --set-env-vars="MESSAGGIO_OCCASIONALE=$MESSAGGIO_OCCASIONALE" \
       --set-env-vars="RAILS_LOG_TO_STDOUT=yesplease" \
       --set-env-vars="RUBY_YJIT_ENABLE=true" \
-      --set-env-vars="DATABASE_URL_DEV=$DATABASE_URL_DEV" \
-      --set-env-vars="DATABASE_URL_PROD=$DATABASE_URL_PROD" \
       --set-env-vars="PROJECT_ID=$PROJECT_ID" \
       --set-env-vars="GEMINI_KEY=$GEMINI_KEY" \
       --set-env-vars="PALM_API_KEY_GEMINI=$GEMINI_KEY" \
@@ -160,6 +158,8 @@ gcloud --project "$CLOUDRUN_PROJECT_ID" \
       --set-secrets="/geminews-key/geminews-key=geminews-key:latest" \
       --allow-unauthenticated
 
+#  --set-env-vars="DATABASE_URL_PROD=$DATABASE_URL_PROD" \
+#      --set-env-vars="DATABASE_URL_DEV=$DATABASE_URL_DEV" \
 
 # Dubito serva:       --set-env-vars="SECRET_KEY_BASE=TODO" \
 
