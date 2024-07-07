@@ -14,4 +14,10 @@ module ApplicationHelper
     end
   end
 
+  # too complex for me to understrand. Requiews understanding of dom_id and edge cases#
+  # see https://www.hotrails.dev/turbo-rails/nested-turbo-frames
+  def nested_dom_id(*args)
+    args.map { |arg| arg.respond_to?(:to_key) ? dom_id(arg) : arg }.join("_")
+  end
+
 end
