@@ -1,4 +1,5 @@
 
+2024-07-07 v1.3  [ops] CH8 - empty state done
 2024-07-07 v1.2  [ops] Adding https://github.com/fly-apps/dockerfile-rails
 2024-07-07 v1.1  CH7 - Making flash msg work!
 2024-07-07 v1.0  CH6 - Adding company and User. 2 more tables!
