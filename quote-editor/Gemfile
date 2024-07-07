@@ -7,6 +7,8 @@ gem 'sqlite3', '~>1.7'
 gem "simple_form" # , "~> 5.1.0"
 # chapter 6
 gem "devise", "~> 4.8.1"
+# Since dockerfile is broken..
+gem "dockerfile-rails", ">= 1.6", :group => :development
 # Riccardo END
 
 
