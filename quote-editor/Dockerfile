@@ -2,7 +2,7 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.1.2
-FROM ruby:$RUBY_VERSION-alpine as base
+FROM ruby:$RUBY_VERSION-slim as base
 
 # Rails app lives here
 WORKDIR /rails
@@ -16,42 +16,36 @@ ENV BUNDLE_PATH="/usr/local/bundle" \
 RUN gem update --system --no-document && \
     gem install -N bundler
 
-# Install packages
-RUN apk update && \
-    apk add tzdata && \
-    rm -rf /var/cache/apk/*
-
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages needed to build gems and node modules
-RUN apk update && \
-    apk add build-base curl gyp libpq-dev pkgconfig python3
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential curl libpq-dev node-gyp pkg-config python-is-python3
 
 # Install JavaScript dependencies
 ARG NODE_VERSION=22.1.0
 ARG YARN_VERSION=1.22.22
 ENV PATH=/usr/local/node/bin:$PATH
-RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64-musl.tar.gz | tar xz -C /tmp/ && \
-    mkdir /usr/local/node && \
-    cp -rp /tmp/node-v${NODE_VERSION}-linux-x64-musl/* /usr/local/node/ && \
+RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
+    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
     npm install -g yarn@$YARN_VERSION && \
-    rm -rf /tmp/node-v${NODE_VERSION}-linux-x64-musl
+    rm -rf /tmp/node-build-master
 
 # Install application gems
-COPY --link Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
     bundle exec bootsnap precompile --gemfile && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 # Install node modules
-COPY --link .yarnrc package.json yarn.lock ./
-COPY --link .yarn/releases/* .yarn/releases/
+COPY .yarnrc package.json yarn.lock ./
+COPY .yarn/releases/* .yarn/releases/
 RUN yarn install
 
 # Copy application code
-COPY --link . .
+COPY . .
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
@@ -64,9 +58,9 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Install packages needed for deployment
-RUN apk update && \
-    apk add curl libpq postgresql-client sqlite-dev sqlite-libs && \
-    rm -rf /var/cache/apk/*
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libsqlite3-0 postgresql-client && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
@@ -75,8 +69,8 @@ COPY --from=build /rails /rails
 # Run and own only the runtime files as a non-root user for security
 ARG UID=1000 \
     GID=1000
-RUN addgroup --system --gid $GID rails && \
-    adduser --system rails --uid $UID --ingroup rails --home /home/rails --shell /bin/sh rails && \
+RUN groupadd -f -g $GID rails && \
+    useradd -u $UID -g $GID rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
 USER rails:rails
 
