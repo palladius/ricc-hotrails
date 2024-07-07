@@ -1,5 +1,7 @@
+## CHANGELOG
 
-2024-07-07 v1.2.1 Finished the https://www.hotrails.dev/turbo-rails/turbo-rails-crud there's a BUG now. doesnt edit dates.
+```
+2024-07-07 v1.2.1 [CH9] Finished the https://www.hotrails.dev/turbo-rails/turbo-rails-crud there's a BUG now. doesnt edit dates.
 2024-07-07 v1.2.0 [DB][breaking] Add LineItemDate.
    Moving form 2 to 3 digits sorry
 2024-07-07 v1.3  [ops] CH8 - empty state done
@@ -17,3 +19,4 @@
 2024-07-06 v0.5  I cant believe turbo was actually NOT there..
 2024-07-06 v0.4  finished chapter 5. However turbo seems broken :/
 2024-07-06 v0.3  Finished cut-pasting the CSS from https://www.hotrails.dev/turbo-rails/css-ruby-on-rails
+```
