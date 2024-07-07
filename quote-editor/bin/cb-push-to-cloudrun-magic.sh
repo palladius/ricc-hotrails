@@ -11,7 +11,7 @@
 # TODO(ricc): add a bunch of eNVs from local to Secret manager to fix the 2.0.4buggy
 
 
-export DEPLOY_VERSION='2.0.5'
+export DEPLOY_VERSION='2.0.6'
 #
 # 31may24  2.0.5       Added ENV[RUBY_YJIT_ENABLE]=true - should compile stuff faster now.
 # 19may24  2.0.4buggy  Added ENV[PALM_API_KEY_GEMINI] - should fix PalmLLM. Note I used GEMINI_KEY for since  PALM_API_KEY_GEMINI is actually not in
@@ -44,6 +44,7 @@ function _usage() {
 ################################################
 # ENV set
 ################################################
+export PORT=8080
 export APP_NAME='ricc-hotrails'
 export AR_NAME='ricc-hotrails-v2'
 export APP_NAME_TO_DEPLOY='ricc-hotrails-v2'
@@ -136,6 +137,7 @@ echo 'WARNING: For this to work you need to 1. upload your ENVRC to Secret MAnag
 gcloud --project "$CLOUDRUN_PROJECT_ID" \
     beta run deploy "$APP_TO_DEPLOY" \
       --image "$UPLOADED_IMAGE_WITH_VER" \
+      --port "$PORT" \
       --platform managed \
       --memory "3072Mi" \
       --region "$GCLOUD_REGION" \
@@ -149,11 +151,8 @@ gcloud --project "$CLOUDRUN_PROJECT_ID" \
       --set-env-vars="RAILS_LOG_TO_STDOUT=yesplease" \
       --set-env-vars="RUBY_YJIT_ENABLE=true" \
       --set-env-vars="PROJECT_ID=$PROJECT_ID" \
-      --set-env-vars=GCP_KEY_PATH_FROM_WEBAPP="/geminews-key/geminews-key" \
-      --set-env-vars=ENABLE_GCP='true' \
-      --set-env-vars=APP_NAME='GemiNews CB-CR-magic' \
+      --set-env-vars=APP_NAME='RiccHotrails v2 CB-CR-magic' \
       --set-secrets="/secretenvrc/ricc-hotrails-envrc=ricc-hotrails-envrc:latest" \
-      --set-secrets="/geminews-key/geminews-key=geminews-key:latest" \
       --allow-unauthenticated
 
 #      --set-env-vars="PALM_API_KEY_GEMINI=$GEMINI_KEY" \

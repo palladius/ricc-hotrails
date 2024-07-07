@@ -136,6 +136,7 @@ echo 'WARNING: For this to work you need to 1. upload your ENVRC to Secret MAnag
 gcloud --project "$CLOUDRUN_PROJECT_ID" \
     beta run deploy "$APP_TO_DEPLOY" \
       --image "$UPLOADED_IMAGE_WITH_VER" \
+      --port "8080" \
       --platform managed \
       --memory "3072Mi" \
       --region "$GCLOUD_REGION" \

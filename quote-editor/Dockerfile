@@ -79,4 +79,5 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 8080
-CMD ["./bin/rails", "server"]
+
+CMD ["./bin/rails", "server", "-p", "8080", "-b", "0.0.0.0"]
