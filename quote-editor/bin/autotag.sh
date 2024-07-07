@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-export APP_NAME='ricc-hotrails'
+export APP_NAME='ricc-hotrails-v2'
 # Note the dash is in Ricc project id...
 SKAFFOLD_DEFAULT_REPO="europe-west1-docker.pkg.dev/palladius-genai/$APP_NAME/$APP_NAME"
 export GIT_STATE="$(git rev-list -1 HEAD --abbrev-commit)"

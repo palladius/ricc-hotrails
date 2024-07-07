@@ -25,16 +25,16 @@ substitutions:
   _REGION: europe-west1 # for Cloud Build.
   _GCLOUD_REGION: europe-west1
   _PROJECT_ID: palladius-genai
-  _APP_NAME: ricc-hotrails
-  #_SKAFFOLD_DEFAULT_REPO: 'europe-west1-docker.pkg.dev/palladius-genai/ricc-hotrails'
+  _APP_NAME: ricc-hotrails-v2
+  #_SKAFFOLD_DEFAULT_REPO: 'europe-west1-docker.pkg.dev/palladius-genai/ricc-hotrails-v2'
   _MESSAGGIO_OCCASIONALE: >-
     Ho provato a mettere le E2 per buildare piu veloce vediamo se va.
     Voglio anche provare a mettere dipendenze tra 4,6 e 5,7
 
     Copied from gemini-news-crawler.
 images:
-- "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails/ricc-hotrails:latest"
-- "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails/ricc-hotrails:sha-$SHORT_SHA"
+- "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails-v2/ricc-hotrails-v2:latest"
+- "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails-v2/ricc-hotrails-v2:sha-$SHORT_SHA"
 
 ################################################################################
 # TODO(ricc): enable availableSecrets as below once Cloud build is able to push again
@@ -57,8 +57,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   #id: 1. Docker Build - to CB_LATEST # might be error prone vs the one create from computer
   id:  'step1 docker build' ##1. Docker Build - to CB_LATEST # might be error prone vs the one create from computer
-  args: ['build', '-t', "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails/ricc-hotrails:latest", '.']
-  dir: quote-editor
+  args: ['build', '-t', "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails-v2/ricc-hotrails-v2:latest", '.']
+  dir: webapp
   env:
   - 'PROJECT_ID=$PROJECT_ID'
   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
@@ -69,9 +69,9 @@ steps:
   id:  'step2 docker tag'
   args:
     - 'tag'
-    - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails/ricc-hotrails:latest"
-    - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails/ricc-hotrails:sha-$SHORT_SHA"
-  dir: quote-editor
+    - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails-v2/ricc-hotrails-v2:latest"
+    - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/ricc-hotrails-v2/ricc-hotrails-v2:sha-$SHORT_SHA"
+  dir: webapp
 
 - name: 'gcr.io/cloud-builders/docker'
   #name: 3. Tag from SHA to VERSION - proviamo con Docker
@@ -82,7 +82,7 @@ steps:
   env:
   - 'PROJECT_ID=$PROJECT_ID'
   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
-  dir: quote-editor
+  dir: webapp
 
 
 # Questo finalmente funge!
@@ -92,7 +92,7 @@ steps:
   args:
   - bin/cb-push-to-cloudrun-magic.sh
   - dev
-  dir: quote-editor
+  dir: webapp
   env:
   - 'PROJECT_ID=$PROJECT_ID'
   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
@@ -108,7 +108,7 @@ steps:
   - bin/cb-push-to-cloudrun-magic.sh
   - prod
   allowFailure: true
-  dir: quote-editor
+  dir: webapp
   env:
   - 'PROJECT_ID=$PROJECT_ID'
   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'
@@ -124,7 +124,7 @@ steps:
 #   id: 6. Push DEV-OLD to Cloud run from POOR Env with DB stuff..
 #   entrypoint: bash
 #   args: [ "bin/cb-push-to-cloudrun-dev.sh" , "latest" ]
-#   dir: quote-editor
+#   dir: webapp
 #   allowFailure: true
 #   env:
 #   - 'PROJECT_ID=$PROJECT_ID'
@@ -138,7 +138,7 @@ steps:
 #   args:
 #   - bin/cb-push-to-cloudrun-prod.sh
 #   allowFailure: true
-#   dir: quote-editor
+#   dir: webapp
 #   env:
 #   - 'PROJECT_ID=$PROJECT_ID'
 #   - 'RAILS_MASTER_KEY=$_RAILS_MASTER_KEY'

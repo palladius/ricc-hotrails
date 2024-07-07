@@ -45,8 +45,8 @@ function _usage() {
 # ENV set
 ################################################
 export APP_NAME='ricc-hotrails'
-export AR_NAME='ricc-hotrails'
-export APP_NAME_TO_DEPLOY='ricc-hotrails'
+export AR_NAME='ricc-hotrails-v2'
+export APP_NAME_TO_DEPLOY='ricc-hotrails-v2'
 export GCLOUD_REGION="${GCLOUD_REGION:-europe-west1}"
 export GIT_STATE="$(git rev-list -1 HEAD --abbrev-commit)"
 export GIT_COMMIT_SHA="$(git rev-parse HEAD)" # big commit
