@@ -2,7 +2,6 @@
 
 ---
 options:
-  cache: true
   compose: true
   link: false
   lock: false

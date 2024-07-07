@@ -21,9 +21,7 @@ RUN gem update --system --no-document && \
 FROM base as prebuild
 
 # Install packages needed to build gems and node modules
-RUN --mount=type=cache,id=dev-apt-cache,sharing=locked,target=/var/cache/apt \
-    --mount=type=cache,id=dev-apt-lib,sharing=locked,target=/var/lib/apt \
-    apt-get update -qq && \
+RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl libpq-dev node-gyp pkg-config python-is-python3
 
 
@@ -40,23 +38,16 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
 
 # Install node modules
 COPY package.json yarn.lock ./
-RUN --mount=type=cache,id=bld-yarn-cache,target=/root/.yarn \
-    YARN_CACHE_FOLDER=/root/.yarn yarn install
+RUN yarn install
 
 
 FROM prebuild as build
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN --mount=type=cache,id=bld-gem-cache,sharing=locked,target=/srv/vendor \
-    bundle config set app_config .bundle && \
-    bundle config set path /srv/vendor && \
-    bundle install && \
+RUN bundle install && \
     bundle exec bootsnap precompile --gemfile && \
-    bundle clean && \
-    mkdir -p vendor && \
-    bundle config set path vendor && \
-    cp -ar /srv/vendor .
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 # Copy node modules
 COPY --from=node /rails/node_modules /rails/node_modules
@@ -77,10 +68,9 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Install packages needed for deployment
-RUN --mount=type=cache,id=dev-apt-cache,sharing=locked,target=/var/cache/apt \
-    --mount=type=cache,id=dev-apt-lib,sharing=locked,target=/var/lib/apt \
-    apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 postgresql-client
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libsqlite3-0 postgresql-client && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
@@ -98,7 +88,6 @@ USER rails:rails
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-
 # Original:
 # EXPOSE 3000
 # CMD ["./bin/rails", "server"]

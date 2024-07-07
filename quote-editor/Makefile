@@ -24,5 +24,8 @@ Dockerfile:
 	#rails g dockerfile --optimistic --force --compose --no-lock
 
 	# Trying this out with more speedup stuff. 4min on GCB atm
-	rails g dockerfile --optimistic --force --compose --cache --parallel
+	# BROKEN
+	#rails g dockerfile --optimistic --force --compose --cache --parallel
+
+	rails g dockerfile --optimistic --force --compose --parallel
 
