@@ -1,6 +1,7 @@
 ## CHANGELOG
 
 ```
+2024-07-07 v1.3.9 [ops] tryinbg more standard dockerfile (I put nolock to fix docker bug)
 2024-07-07 v1.3.8 [ops] Still doesnt work for dev. this is embarassing since PROD works (!) Adding an ENV too so I dont need to redeploy to fix this nonsense.
 2024-07-07 v1.3.7 [ops] Adding allowlisted hosts
 2024-07-07 v1.3.6 [ops] Moved port to 8080

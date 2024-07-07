@@ -13,12 +13,16 @@ test:
 fix-prod:
 	bundle lock --add-platform x86_64-linux
 
-# https://github.com/fly-apps/dockerfile-rails
+
 .PHONY: Dockerfile
 
-
+# https://github.com/fly-apps/dockerfile-rails
 Dockerfile:
 # --no-lock - don't add linux platforms, set BUNDLE_DEPLOY, or --frozen-lockfile. May be needed at times to work around a rubygems bug.
 
 	# This works ! Now try without nolock and activate cache
-	rails g dockerfile --optimistic --force --compose --no-lock
+	#rails g dockerfile --optimistic --force --compose --no-lock
+
+	# Trying this out with more speedup stuff. 4min on GCB atm
+	rails g dockerfile --optimistic --force --compose --cache --parallel
+

@@ -17,12 +17,17 @@ RUN gem update --system --no-document && \
     gem install -N bundler
 
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
+# Throw-away build stages to reduce size of final image
+FROM base as prebuild
 
 # Install packages needed to build gems and node modules
-RUN apt-get update -qq && \
+RUN --mount=type=cache,id=dev-apt-cache,sharing=locked,target=/var/cache/apt \
+    --mount=type=cache,id=dev-apt-lib,sharing=locked,target=/var/lib/apt \
+    apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl libpq-dev node-gyp pkg-config python-is-python3
+
+
+FROM prebuild as node
 
 # Install JavaScript dependencies
 ARG NODE_VERSION=22.1.0
@@ -33,16 +38,30 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
 
+# Install node modules
+COPY package.json yarn.lock ./
+RUN --mount=type=cache,id=bld-yarn-cache,target=/root/.yarn \
+    YARN_CACHE_FOLDER=/root/.yarn yarn install
+
+
+FROM prebuild as build
+
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
+RUN --mount=type=cache,id=bld-gem-cache,sharing=locked,target=/srv/vendor \
+    bundle config set app_config .bundle && \
+    bundle config set path /srv/vendor && \
+    bundle install && \
     bundle exec bootsnap precompile --gemfile && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
+    bundle clean && \
+    mkdir -p vendor && \
+    bundle config set path vendor && \
+    cp -ar /srv/vendor .
 
-# Install node modules
-COPY .yarnrc package.json yarn.lock ./
-COPY .yarn/releases/* .yarn/releases/
-RUN yarn install
+# Copy node modules
+COPY --from=node /rails/node_modules /rails/node_modules
+COPY --from=node /usr/local/node /usr/local/node
+ENV PATH=/usr/local/node/bin:$PATH
 
 # Copy application code
 COPY . .
@@ -58,9 +77,10 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN --mount=type=cache,id=dev-apt-cache,sharing=locked,target=/var/cache/apt \
+    --mount=type=cache,id=dev-apt-lib,sharing=locked,target=/var/lib/apt \
+    apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libsqlite3-0 postgresql-client
 
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
@@ -78,6 +98,10 @@ USER rails:rails
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 8080
 
+# Original:
+# EXPOSE 3000
+# CMD ["./bin/rails", "server"]
+# Carlesso:
+EXPOSE 8080
 CMD ["./bin/rails", "server", "-p", "8080", "-b", "0.0.0.0"]
