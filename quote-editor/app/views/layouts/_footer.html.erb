@@ -1,0 +1,19 @@
+<%
+
+# fix this function
+def rails_env_emoji
+  case Rails.env
+  when 'development' then '🟡'
+  when 'production' then '🟢'
+  else '🤷🏼‍♀️'
+  end
+end
+%>
+
+<footer class="footer footer2" style='font-style:bold;align:center' >
+  <b><%= APP_NAME %></b>
+  <b>v<%= APP_VERSION %></b>
+
+  <tt><%= rails_env_emoji + Rails.env %></tt>
+  <%= link_to 'Code on github','https://github.com/palladius/ricc-hotrails/' %>
+</footer>
