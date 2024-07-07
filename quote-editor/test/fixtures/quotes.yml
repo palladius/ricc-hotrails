@@ -1,14 +1,14 @@
 first:
   company: kpmg
-  name: First quote (KPMG)
+  name: First quote # (KPMG)
 
 second:
   company: kpmg
-  name: Second quote (KPMG)
+  name: Second quote # (KPMG)
 
 third:
   company: kpmg
-  name: Third quote (KPMG)
+  name: Third quote # (KPMG)
 
 pwc-quote:
   company: pwc

@@ -1,26 +1,65 @@
 <% # app/views/line_item_dates/_line_item_date.html.erb %>
 
 
+
 <%= turbo_frame_tag line_item_date do %>
   <div class="line-item-date">
-    <!-- All the previous code -->
+    <%= turbo_frame_tag dom_id(line_item_date, :edit) do %>
+      <div class="line-item-date__header">
+        <h2 class="line-item-date__title">
+          Invoice <%= line_item_date.id %> - <%= l(line_item_date.date, format: :long) %>
+        </h2>
+      </div>
+    <% end %>
+
     <div class="line-item-date__body">
       <div class="line-item line-item--header">
-        <!-- All the previous code -->
+        <!-- All the previous code (i dont know whay goes here!) -->
       </div>
 
       <%= turbo_frame_tag nested_dom_id(line_item_date, "line_items") do %>
         <%= render line_item_date.line_items, quote: quote, line_item_date: line_item_date %>
       <% end %>
-
       <%= turbo_frame_tag nested_dom_id(line_item_date, LineItem.new) %>
 
       <div class="line-item-date__footer">
-        <%= link_to "Add item",
-                    [:new, quote, line_item_date, :line_item],
-                    data: { turbo_frame: nested_dom_id(line_item_date, LineItem.new) },
-                    class: "btn btn--primary" %>
+          <%= link_to "Add item",
+                      [:new, quote, line_item_date, :line_item],
+                      data: { turbo_frame: nested_dom_id(line_item_date, LineItem.new) },
+                      class: "btn btn--primary" %>
       </div>
     </div>
+
   </div>
+<% end %>
+
+<% if false %>
+                                  <%= turbo_frame_tag line_item_date do %>
+                                    <div class="line-item-date">
+                                      <%= turbo_frame_tag dom_id(line_item_date, :edit) do %>
+                                        <div class="line-item-date__header">
+                                          <!-- All the previous code -->
+                                          <!-- Newer from https://www.hotrails.dev/turbo-rails/nested-turbo-frames  -->
+                                          </div>
+                                          <div class="line-item line-item--header">
+                                          <!-- All the previous code (credo questo vada bia) -->
+                                        </div>
+                                      <% end %>
+
+                                      <div class="line-item-date__body">
+                                        <%= turbo_frame_tag nested_dom_id(line_item_date, "line_items") do %>
+                                          <%= render line_item_date.line_items, quote: quote, line_item_date: line_item_date %>
+                                        <% end %>
+
+                                        <%= turbo_frame_tag nested_dom_id(line_item_date, LineItem.new) %>
+
+                                        <div class="line-item-date__footer">
+                                          <%= link_to "Add item",
+                                                      [:new, quote, line_item_date, :line_item],
+                                                      data: { turbo_frame: nested_dom_id(line_item_date, LineItem.new) },
+                                                      class: "btn btn--primary" %>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <% end %>
 <% end %>

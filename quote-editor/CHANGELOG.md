@@ -1,7 +1,8 @@
 ## CHANGELOG
 
 ```
-.. 1.3.1 Adding LI controller and views  app/views/line_items/new.html.erb ...
+2024-07-07 v1.3.2 Fixed the mistakes, it all works now!
+2024-07-07 v1.3.1 Adding LI controller and views  app/views/line_items/new.html.erb ...
 2024-07-07 v1.3.0 [CH10] Adding LineItems
 2024-07-07 v1.2.1 [CH9] Finished the https://www.hotrails.dev/turbo-rails/turbo-rails-crud there's a BUG now. doesnt edit dates.
 2024-07-07 v1.2.0 [DB][breaking] Add LineItemDate.
