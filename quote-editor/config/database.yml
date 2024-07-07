@@ -19,9 +19,17 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-development:
+development: # sqlite3
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
+development-todo: # postgres TODO
   <<: *default
-  database: quote_editor_development
+  database: "<%= ENV['DATABASE_URL'] %>"
+  #database: quote_editor_development
+  # DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -54,8 +62,12 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: quote_editor_test
+  adapter: sqlite3
+  database: db/test.sqlite3
+  pool: 5
+  timeout: 5000
+  # <<: *default
+  # database: quote_editor_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -77,8 +89,15 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
+production-todo:
   <<: *default
-  database: quote_editor_production
-  username: quote_editor
-  password: <%= ENV["QUOTE_EDITOR_DATABASE_PASSWORD"] %>
+  # database: quote_editor_production
+  # username: quote_editor
+  # password: <%= ENV["QUOTE_EDITOR_DATABASE_PASSWORD"] %>
+  database: <%= ENV['DATABASE_URL'] %>
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000

@@ -21,4 +21,8 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+## initialization
+
+```
+rails generate simple_form:install
+```
